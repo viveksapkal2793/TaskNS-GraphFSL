@@ -53,7 +53,7 @@ venv.bak/
 *.pkl
 *.csv
 *.json
-few_shot_data/
+# few_shot_data/
 dataset/
 
 # Logs and results
