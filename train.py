@@ -45,7 +45,9 @@ if args.cuda:
     torch.cuda.manual_seed(args.seed)
 
 dataset = args.dataset
+print('Loading {} dataset...'.format(dataset))
 adj, features, labels, degrees, class_list_train, class_list_valid, class_list_test, id_by_class = load_data(dataset)
+print('Dataset has {} nodes, {} features.'.format(features.shape[0], features.shape[1]))
 
 # Model and optimizer
 encoder = GPN_Encoder(nfeat=features.shape[1],
@@ -173,13 +175,18 @@ if __name__ == '__main__':
         t_total = time.time()
         meta_train_acc = []
         meta_train_f1 = []
-        for episode in range(args.episodes):#
+        for episode in range(args.episodes):
+            print('--- Episode %d ---' % episode)
             id_support, id_query, OOD_sample, ID_class_selected = \
                 select_task_generator(adj, id_by_class, class_list_train, n_way, k_shot, n_query, o_way, o_num_way, Outlier_num)
             aux_num = Outlier_num
             acc_train, f1_train = train(ID_class_selected, id_support, id_query, OOD_sample, n_way, k_shot, aux_num)
             meta_train_acc.append(acc_train)
             meta_train_f1.append(f1_train)
+
+            if episode % 100 == 0:
+                print(f'Episode {episode}: Train Acc: {acc_train:.4f}, Train F1: {f1_train:.4f}')
+            
             if episode > 0 and episode % 100 == 0:
                 meta_test_acc = []
                 meta_test_f1 = []
@@ -188,3 +195,9 @@ if __name__ == '__main__':
                     acc_test, f1_test= test(ID_class_selected, id_support, id_query, n_way, k_shot, episode)
                     meta_test_acc.append(acc_test)
                     meta_test_f1.append(f1_test)
+
+                avg_test_acc = np.mean(meta_test_acc)
+                avg_test_f1 = np.mean(meta_test_f1)
+                print(f'Episode {episode}: Test Acc: {avg_test_acc:.4f} ± {np.std(meta_test_acc):.4f}')
+                print(f'Episode {episode}: Test F1: {avg_test_f1:.4f} ± {np.std(meta_test_f1):.4f}')
+                print('-' * 50)
