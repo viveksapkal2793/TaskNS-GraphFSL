@@ -8,7 +8,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=48G
-#SBATCH --time=1:00:00
+#SBATCH --time=1-00:00:00
 #SBATCH --qos=fatqos
 #SBATCH -D /scratch/data/bikash_rs/vivek/TaskNS-GraphFSL/
 
