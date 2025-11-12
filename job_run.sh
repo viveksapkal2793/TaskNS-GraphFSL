@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=ama_e_graphfsl_taskns
+#SBATCH --job-name=corafull_graphfsl_taskns
 #SBATCH --output=/scratch/data/bikash_rs/vivek/TaskNS-GraphFSL/logs/%x_%j.out
 #SBATCH --error=/scratch/data/bikash_rs/vivek/TaskNS-GraphFSL/logs/%x_%j.err
 #SBATCH --partition=dgx
@@ -21,5 +21,5 @@ mkdir -p logs
 # Activate virtual environment
 source taskns-env/bin/activate
 
-python train.py --use_cuda --dataset Amazon_electronics --way 5 --shot 3 --qry 15 --episodes 2000
+python train.py --use_cuda --dataset corafull --way 5 --shot 3 --qry 15 --episodes 2000
 # python create_cora_split.py

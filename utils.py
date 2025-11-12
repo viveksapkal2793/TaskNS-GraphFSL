@@ -295,7 +295,7 @@ def sparse_mx_to_torch_sparse_tensor(sparse_mx):
         np.vstack((sparse_mx.row, sparse_mx.col)).astype(np.int64))
     values = torch.from_numpy(sparse_mx.data)
     shape = torch.Size(sparse_mx.shape)
-    return torch.sparse.FloatTensor(indices, values, shape)
+    return torch.sparse_coo_tensor(indices, values, shape, dtype=torch.float32)
 
 def find_neighbors(adj, id_by_class, sample_id, k_hop):
     result_id_by_class = {}
@@ -357,6 +357,8 @@ def G_task_generator(adj, id_by_class, class_list, n_way, k_shot, m_query, hop_n
 
 def get_shortest_path_lengths(adj, id_support, aux_query):
     id_to_index = {id:i for i, id in enumerate(id_support)}
+    if adj.is_cuda:
+        adj = adj.cpu()
     adj = np.array(adj.to_dense())
     graph = nx.from_numpy_array(adj)
     shortest_path_lengths = {}

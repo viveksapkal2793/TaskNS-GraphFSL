@@ -43,11 +43,11 @@ random.seed(args.seed)
 torch.manual_seed(args.seed)
 if args.cuda:
     torch.cuda.manual_seed(args.seed)
-
+print("Job started with args:", args, flush=True)
 dataset = args.dataset
-print('Loading {} dataset...'.format(dataset))
+print('Loading {} dataset...'.format(dataset), flush=True)
 adj, features, labels, degrees, class_list_train, class_list_valid, class_list_test, id_by_class = load_data(dataset)
-print('Dataset has {} nodes, {} features.'.format(features.shape[0], features.shape[1]))
+print('Dataset has {} nodes, {} features.'.format(features.shape[0], features.shape[1]), flush=True)
 
 # Model and optimizer
 encoder = GPN_Encoder(nfeat=features.shape[1],
@@ -176,7 +176,7 @@ if __name__ == '__main__':
         meta_train_acc = []
         meta_train_f1 = []
         for episode in range(args.episodes):
-            print('--- Episode %d ---' % episode)
+            print('--- Episode %d ---' % episode, flush=True)
             id_support, id_query, OOD_sample, ID_class_selected = \
                 select_task_generator(adj, id_by_class, class_list_train, n_way, k_shot, n_query, o_way, o_num_way, Outlier_num)
             aux_num = Outlier_num
