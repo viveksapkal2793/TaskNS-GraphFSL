@@ -50,7 +50,7 @@ taskns-env/
 
 # Data files
 *.npz
-*.mat
+# *.mat
 *.pkl
 *.csv
 *.json
