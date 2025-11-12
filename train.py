@@ -29,7 +29,7 @@ parser.add_argument('--dropout', type=float, default=0.4,
 parser.add_argument('--way', type=int, default=5, help='way.')
 parser.add_argument('--shot', type=int, default=3,help='shot.')
 parser.add_argument('--qry', type=int, help='k shot for query set', default=15)
-parser.add_argument('--dataset', default='Amazon_clothing', help='Dataset:Amazon_clothing/Amazon_eletronics/dblp/corafull')
+parser.add_argument('--dataset', default='Amazon_clothing', help='Dataset:Amazon_clothing/Amazon_electronics/dblp/corafull')
 parser.add_argument('--aux_way', type=int, default=8, help='')
 parser.add_argument('--aux_num_per_way', type=int, default=20, help='') 
 parser.add_argument('--outlier_num', type=int, default=10, help='outlier_num')
@@ -184,7 +184,7 @@ if __name__ == '__main__':
             meta_train_acc.append(acc_train)
             meta_train_f1.append(f1_train)
 
-            if episode % 100 == 0:
+            if episode % 1 == 0:
                 print(f'Episode {episode}: Train Acc: {acc_train:.4f}, Train F1: {f1_train:.4f}')
             
             if episode > 0 and episode % 100 == 0:

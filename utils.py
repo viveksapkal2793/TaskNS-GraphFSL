@@ -57,7 +57,7 @@ def load_npz_to_sparse_graph(file_name):
     return adj_matrix, attr_matrix, labels, node_names, attr_names, class_names, metadata
 
 
-valid_num_dic = {'Amazon_clothing': 17, 'Amazon_eletronics': 36, 'dblp': 27}
+valid_num_dic = {'Amazon_clothing': 17, 'Amazon_electronics': 36, 'dblp': 27}
 
 def load_data(dataset_source):
     # adj, features, labels, degree = None, None, None, None
